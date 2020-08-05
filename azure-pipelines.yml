@@ -81,10 +81,3 @@ steps:
     codeCoverageTool: Cobertura
     summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
     reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
-    
-- task: TwineAuthenticate@0
-  inputs:
-  artifactFeed: '<Azure Artifacts feed name>'
-  pythonUploadServiceConnection: '<twine service connection from external organization>
-      
-      
