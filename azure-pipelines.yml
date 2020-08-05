@@ -54,9 +54,15 @@ steps:
       print ('Hello ', args.world)
     arguments: --world Venus
     
+- script: pip install -r requirements.txt
+  displayName: 'Install requirements'
+    
 - script: python -m pip install --upgrade pip setuptools wheel
   displayName: 'Install tools'
 
+- script: |
+     -m pip install flake8
+displayName: 'Run lint tests'
 
 #- script: |
 #    pip install pytest
