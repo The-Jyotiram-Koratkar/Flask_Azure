@@ -61,8 +61,8 @@ steps:
   displayName: 'Install tools'
 
 - script: |
-     -m pip install flake8
-displayName: 'Run lint tests'
+  python -m pip install flake8
+  displayName: 'Run lint tests'
 
 #- script: |
 #    pip install pytest
