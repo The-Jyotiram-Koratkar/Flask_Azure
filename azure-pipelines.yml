@@ -6,29 +6,57 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'ubuntu-latest'
-strategy:
-  matrix:
-    Python27:
-      python.version: '2.7'
-    Python35:
-      python.version: '3.5'
-    Python36:
-      python.version: '3.6'
+jobs:
+- job: 'Test'
+  pool:
+    vmImage: 'ubuntu-latest'
+  strategy:
+    matrix:
+      Python27:
+        python.version: '2.7'
+      Python35:
+        python.version: '3.5'
+      Python36:
+        python.version: '3.6'
 
-steps:
-- task: UsePythonVersion@0
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '$(python.version)'
+    displayName: 'Use Python $(python.version)'
+
+  - script: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+    displayName: 'Install dependencies'
+
+  - script: |
+      pip install pytest pytest-azurepipelines
+      pytest
+    displayName: 'pytest'
+
+  - script: pip install tox
+  displayName: 'Install Tox'
+
+  - script: tox -e py
+  displayName: 'Run Tox'
+  
+  - task: PublishTestResults@2
+  condition: succeededOrFailed()
   inputs:
-    versionSpec: '$(python.version)'
-  displayName: 'Use Python $(python.version)'
-
-- script: |
-    python -m pip install --upgrade pip
-    pip install -r requirements.txt
-  displayName: 'Install dependencies'
-
-- script: |
-    pip install pytest pytest-azurepipelines
-    pytest
-  displayName: 'pytest'
+    testResultsFiles: '**/test-*.xml'
+    testRunTitle: 'Publish test results for Python $(python.version)'
+  
+  - task: PublishCodeCoverageResults@1
+  inputs:
+    codeCoverageTool: Cobertura
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/coverage.xml'
+    reportDirectory: '$(System.DefaultWorkingDirectory)/**/htmlcov'
+  
+  #- task: TwineAuthenticate@0
+  #inputs:
+  #  artifactFeed: '<Azure Artifacts feed name>'
+  #  pythonUploadServiceConnection: '<twine service connection from external organization>'
+    
+  #- script: |
+  #   twine upload -r "<feed or service connection name>" --config-file $(PYPIRC_PATH) <package path/files>
