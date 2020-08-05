@@ -67,8 +67,8 @@ steps:
 - script: pip install tox
   displayName: 'Install Tox'
 
-- script: tox -e py
-  displayName: 'Run Tox'
+#- script: tox -e py
+#  displayName: 'Run Tox'
     
 - task: PublishTestResults@2
   condition: succeededOrFailed()
