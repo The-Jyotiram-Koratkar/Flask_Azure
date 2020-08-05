@@ -65,10 +65,10 @@ steps:
   displayName: 'Test with pytest'
 
 - script: pip install tox
-    displayName: 'Install Tox'
+  displayName: 'Install Tox'
 
 - script: tox -e py
-    displayName: 'Run Tox'
+  displayName: 'Run Tox'
     
 - task: PublishTestResults@2
   condition: succeededOrFailed()
