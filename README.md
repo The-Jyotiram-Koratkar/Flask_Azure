@@ -1,3 +1,5 @@
+[![Build Status](https://dev.azure.com/jyotiramsakshi10/Sample_Azure_CICD/_apis/build/status/The-Jyotiram-Koratkar.Flask_Azure?branchName=master)](https://dev.azure.com/jyotiramsakshi10/Sample_Azure_CICD/_build/latest?definitionId=1&branchName=master)
+
 # Python/Flask tutorial sample for Visual Studio Code
 
 * This sample contains the completed program from the tutorial, make sure to visit the link: [Using Flask in Visual Studio Code](https://code.visualstudio.com/docs/python/tutorial-flask). Intermediate steps are not included.
